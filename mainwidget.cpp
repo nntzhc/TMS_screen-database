@@ -3,7 +3,7 @@
 
 //全局变量
 QString now_user_name;
-QString now_user_id;
+int now_user_id;
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),

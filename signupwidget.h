@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QMessageBox>
 #include <QDebug>
+#include <QString>
 
 namespace Ui {
 class Signupwidget;

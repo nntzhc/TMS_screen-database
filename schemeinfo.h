@@ -5,12 +5,13 @@
 class SchemeInfo
 {
 private:
-    QString id,name,disease,position,all_time;
-    int  power, freq,pulse_num_oneT,rest_time,T_num,all_pulse_num;
+
 
 public:
+    QString name,disease,position,all_time;
+    int  id,power, freq,pulse_num_oneT,rest_time,T_num,all_pulse_num;
     SchemeInfo();
-    SchemeInfo (QString tid ,QString tname , QString tdisease , QString tposition  , int tpower\
+    SchemeInfo (int tid ,QString tname , QString tdisease , QString tposition  , int tpower\
                 , int tfreq , int tpulse_num_oneT , int trest_time , int tT_num, QString tall_time , int tall_pulse_num){
         name = tname;
         disease= tdisease;
@@ -40,7 +41,7 @@ public:
     QString getAll_time(){
         return all_time;
     }
-    QString getId(){
+    int getId(){
             return id;
         }
     int getPower(){

@@ -29,8 +29,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>250</y>
+     <x>10</x>
+     <y>10</y>
      <width>72</width>
      <height>15</height>
     </rect>
@@ -65,6 +65,19 @@ min-width :  9em ;
      <string>CHOOSE2</string>
     </property>
    </item>
+  </widget>
+  <widget class="QPushButton" name="startButton">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>240</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>启动</string>
+   </property>
   </widget>
  </widget>
  <resources/>

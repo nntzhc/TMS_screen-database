@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QString>
 #include "mainwidget.h"
-//#include "qstring.h"
+#include "sqlitedbaoperator.h"
 
 int main(int argc, char *argv[]){
 //    //解决可能的中文乱码
@@ -10,6 +10,7 @@ int main(int argc, char *argv[]){
 //    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("GB2312"));
 
     QApplication app(argc, argv);
+
 
 //    char now_user_name=' ';
 //    int now_user_id=0;

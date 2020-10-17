@@ -16,8 +16,8 @@ bool getPatientInfo(QVector<PatientInfo> &allPatientInfo){  //读取信息成功
         return false;
     }
     while(!inp.atEnd()){    //读到文件结尾
-        QString id,name,gender;
-        int  age, times;
+        QString name,gender;
+        int id, age, times;
         inp >> name >> id >>gender>> age >> times;
         allPatientInfo.push_back(PatientInfo(name, id,gender, age, times));//这一句会出问题
 
@@ -71,10 +71,10 @@ FilesWidget::FilesWidget(QWidget *parent) :
 
     ui->tableWidget->setRowCount(allPatientInfo.size());
     //将表格的行数设为与学生数量相同
-    //否则setItem添加单元格不会生效
+    //否则setItem添加单元格不会生效.getId
     for(int i = 0; i < allPatientInfo.size(); i++){
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(allPatientInfo[i].getName()));
-        ui->tableWidget->setItem(i, 1, new QTableWidgetItem(allPatientInfo[i].getId()));
+        ui->tableWidget->setItem(i, 1, new QTableWidgetItem(QString::number(allPatientInfo[i].getId())));
         ui->tableWidget->setItem(i, 2, new QTableWidgetItem(allPatientInfo[i].getGender()));
         ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QString::number(allPatientInfo[i].getage())));
         ui->tableWidget->setItem(i, 4, new QTableWidgetItem(QString::number(allPatientInfo[i].gettimes())));
@@ -94,11 +94,6 @@ void FilesWidget::on_returnButton_clicked(){
     emit display(0);
 }
 
-
-
-
-
-
 void FilesWidget::on_refreshButton_clicked()
 {
     QVector<PatientInfo> allPatientInfo;
@@ -115,7 +110,7 @@ void FilesWidget::on_refreshButton_clicked()
     //否则setItem添加单元格不会生效
     for(int i = 0; i < allPatientInfo.size(); i++){
         ui->tableWidget->setItem(i, 0, new QTableWidgetItem(allPatientInfo[i].getName()));
-        ui->tableWidget->setItem(i, 1, new QTableWidgetItem(allPatientInfo[i].getId()));
+        ui->tableWidget->setItem(i, 1, new QTableWidgetItem(QString::number(allPatientInfo[i].getId())));
         ui->tableWidget->setItem(i, 2, new QTableWidgetItem(allPatientInfo[i].getGender()));
         ui->tableWidget->setItem(i, 3, new QTableWidgetItem(QString::number(allPatientInfo[i].getage())));
         ui->tableWidget->setItem(i, 4, new QTableWidgetItem(QString::number(allPatientInfo[i].gettimes())));

@@ -14,8 +14,8 @@ bool getSchemeInfo(QVector<SchemeInfo> &allSchemeInfo){  //读取信息成功返
     }
     while(!inp.atEnd()){    //读到文件结尾
 
-        QString id,name,disease,position,all_time;
-        int  power, freq,pulse_num_oneT,rest_time,T_num,all_pulse_num;
+        QString name,disease,position,all_time;
+        int  id,power, freq,pulse_num_oneT,rest_time,T_num,all_pulse_num;
 
         inp >> id >> name >> disease >> position >> power\
                 >> freq >> pulse_num_oneT >> rest_time >> T_num >> all_time >> all_pulse_num;
@@ -70,7 +70,7 @@ ModifyMode::ModifyMode(QWidget *parent) :
     //否则setItem添加单元格不会生效
 
     for(int i = 0; i < allSchemeInfo.size(); i++){
-        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(allSchemeInfo[i].getId()));
+        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString::number(allSchemeInfo[i].getId())));
         ui->tableWidget->setItem(i, 1, new QTableWidgetItem(allSchemeInfo[i].getName()));
         ui->tableWidget->setItem(i, 2, new QTableWidgetItem(allSchemeInfo[i].getDisease()));
         ui->tableWidget->setItem(i, 3, new QTableWidgetItem(allSchemeInfo[i].getPosition()));
@@ -128,7 +128,7 @@ void ModifyMode::on_refreshButton_clicked()
     //否则setItem添加单元格不会生效
 
     for(int i = 0; i < allSchemeInfo.size(); i++){
-        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(allSchemeInfo[i].getId()));
+        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString::number(allSchemeInfo[i].getId())));
         ui->tableWidget->setItem(i, 1, new QTableWidgetItem(allSchemeInfo[i].getName()));
         ui->tableWidget->setItem(i, 2, new QTableWidgetItem(allSchemeInfo[i].getDisease()));
         ui->tableWidget->setItem(i, 3, new QTableWidgetItem(allSchemeInfo[i].getPosition()));

@@ -24,6 +24,7 @@ signals:
 
 private slots:
     void on_returnButton_clicked();
+    void on_startButton_clicked();
 };
 
 #endif // SINGLEMODE_H

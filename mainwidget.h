@@ -13,6 +13,12 @@
 #include "singlemode.h"
 #include "seriesmode.h"
 #include "addmode.h"
+#include <qdebug.h>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include "sqlitedbaoperator.h"
+#include <QString>
 
 namespace Ui {
 class MainWidget;
@@ -26,6 +32,7 @@ public:
 
     explicit MainWidget(QWidget *parent = nullptr);
     ~MainWidget();
+    QSqlQuery sql_query;
 
 
 private:

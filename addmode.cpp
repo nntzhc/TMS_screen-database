@@ -22,18 +22,13 @@ void Addmode::on_addmodeButton_clicked()
             || ui->T_numEdit->text() == ""){
             //方案信息不能有空项
             QMessageBox::about(NULL, "错误", "存在空项");
-//            TipsDlg dlg(TipsType_Ok, name+"方案设置不能存在空项", this->topLevelWidget());
-//            dlg.setAttribute(Qt::WA_ShowModal, true);
-//            dlg.startTimer();
-//            dlg.exec();
-
             return;
         }
     QString name = ui->nameLineEdit->text();
     QString disease = ui->diseaseEdit->text();
     QString position = ui->positionEdit->text();
-    QString id = ui->idLineEdit->text();
 
+    int id = ui->idLineEdit->text().toInt();
     int power = ui->powerEdit->text().toInt();
     int freq = ui->freqEdit->text().toInt();
     int pulse_num_oneT = ui->pulse_num_oneTEdit->text().toInt();
@@ -45,67 +40,41 @@ void Addmode::on_addmodeButton_clicked()
     int T_s=pulse_num_oneT/freq*T_num+rest_time*(T_num-1);
     all_time = QString::number((int)(T_s/60))+":"+QString::number(T_s%60);
 
-    QFile file("Schemes.txt");
+    SqliteDBAOperator sqlite;
+    sqlite.OpenDb();
 
-    //判断方案编号是否已经被注册
+    QString control_str = QString("create table schemes (id int primary key, name text,disease text, \
+                                                        position text, power int,freq int,\
+                                                        pulse_num_oneT int,rest_time int,T_num int,\
+                                                        all_pulse_num int, all_time text)");
+    sqlite.execute(control_str);
+    //创建schemes表，如果已经存在在qdebug输出错误信息，但不影响继续运行
 
+    SchemeInfo s_info;
 
-    QVector<SchemeInfo> allSchemeInfo;
-    //QFile file1("Schemes.txt");
-    file.open(QIODevice::ReadOnly|QIODevice::Text);
-    //以只读方式打开文本文件Schemes.txt
+    s_info.id=id;
+    s_info.name=name;
+    s_info.disease=disease;
+    s_info.position=position;
+    s_info.power=power;
 
-     QTextStream inp(&file);
-    if(!file.isOpen()){ //文件打开失败
-        QMessageBox::about(NULL, "反馈", "数据文件打开失败");
-        return ;
-    }
-    while(!inp.atEnd()){    //读到文件结尾
+    s_info.freq=freq;
+    s_info.pulse_num_oneT=pulse_num_oneT;
+    s_info.pulse_num_oneT=rest_time;
+    s_info.T_num=T_num;
+    s_info.all_pulse_num=all_pulse_num;
 
-        QString id_temp,name_temp,disease_temp,position_temp,all_time_temp;
-        int  power_temp, freq_temp,pulse_num_oneT_temp,rest_time_temp,T_num_temp,all_pulse_num_temp;
+    s_info.all_time=all_time;
 
-        inp >> id_temp >> name_temp >> disease_temp >> position_temp >> power_temp\
-                >> freq_temp >> pulse_num_oneT_temp >> rest_time_temp >> T_num_temp >> all_time_temp >> all_pulse_num_temp;
-        allSchemeInfo.push_back(SchemeInfo(id_temp , name_temp , disease_temp , position_temp , power_temp\
-                                           , freq_temp , pulse_num_oneT_temp , rest_time_temp , T_num_temp , all_time_temp , all_pulse_num_temp));
+    QString pos_msg=QString("新建方案成功:");
+    QString neg_msg=QString("该方案Id已经存在");
 
-        //调用之前声明的构造函数实例化一个SchemeInfo对象并将其加入allSchemeInfo
-    }
-    allSchemeInfo.pop_back();
-
-    //扔掉最后的无用数据
-    file.close();
-    //关闭文件
-
-    bool flag = false;
-        for(auto i : allSchemeInfo){
-            if(i.getId() == id){
-                flag = true;
-                break;
-            }
+    if(sqlite.SigScheInsert(s_info)) {  TipsDlg dlg(TipsType_Ok, pos_msg+name, this->topLevelWidget());
+            dlg.setAttribute(Qt::WA_ShowModal, true);
+            dlg.startTimer();
+            dlg.exec();
         }
-        if(flag){
-           QMessageBox::about(NULL, "错误", "该方案Id已经存在");
-           return;
-        }
-
-    //完成判断，不存在重复的Id，可以新建档案
-
-    file.open(QIODevice::WriteOnly|QIODevice::Text|QIODevice::Append);
-    if(!file.isOpen()){ //如果数据文件没有打开，弹出对话框提示用户
-            QMessageBox::about(NULL, "错误", "方案信息文件打开失败");
-            return;
-        }
-    QTextStream out(&file);
-        //QTextStream可以进行一些基本的文本读写，比如QString int char之类的数据QDataStream可以进行一个如QMap QPoint之类数据的读写。
-        out <<id<<" "<<name<<" "<<disease<<" "<<position<<" "<<power<<" "<<freq<<" "\
-           <<pulse_num_oneT<<" "<<rest_time<<" "<<T_num<<" "<<all_time<<" "<<all_pulse_num<<endl;
-    file.close();
-    TipsDlg dlg(TipsType_Ok, name+" 新建方案成功", this->topLevelWidget());
-    dlg.setAttribute(Qt::WA_ShowModal, true);
-    dlg.startTimer();
-    dlg.exec();
+    else QMessageBox::about(NULL, "错误", neg_msg);
 
     ui->nameLineEdit->clear();
     ui->idLineEdit->clear();
@@ -116,11 +85,9 @@ void Addmode::on_addmodeButton_clicked()
     ui->pulse_num_oneTEdit->clear();
     ui->rest_timeEdit->clear();
     ui->T_numEdit->clear();
-
 }
 
 void Addmode::on_returnButton_clicked()
 {
     emit display(0);
-
 }

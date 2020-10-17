@@ -44,3 +44,4 @@ void TipsDlg::initFrame(const QString &msg)
     ui->tipsLabel->setText(msg);
 
 }
+

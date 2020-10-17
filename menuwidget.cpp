@@ -1,7 +1,7 @@
 #include "menuwidget.h"
 #include "ui_menuwidget.h"
 
-extern QString now_user_id;
+extern int now_user_id;
 
 MenuWidget::MenuWidget(QWidget *parent) :
     QWidget(parent),
