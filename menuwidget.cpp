@@ -1,7 +1,9 @@
 #include "menuwidget.h"
 #include "ui_menuwidget.h"
+#include "mainwidget.h"
+#include <QDebug>
 
-extern QString now_user_id;
+extern int now_user_id;
 
 MenuWidget::MenuWidget(QWidget *parent) :
     QWidget(parent),
@@ -24,7 +26,12 @@ void MenuWidget::on_modeselectButton_clicked(){
 }
 
 void MenuWidget::on_filesButton_clicked(){
-
+    if(now_user_id==0){
+        QMessageBox::about(NULL, "提示", "用户未登陆");
+        qDebug() <<"now_user_id:  "+QString::number(now_user_id);
+        return;
+    }
+    qDebug()<<"now_user_id:  "+QString::number(now_user_id);
     emit display(3);
 }
 

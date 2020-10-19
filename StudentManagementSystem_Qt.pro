@@ -24,11 +24,14 @@ HEADERS += \
     seriesmode.h \
     modifymode.h \
     fileswidget.h \
-    studentinfo.h \
+#    studentinfo.h \
     tipsdlg.h \
     patientinfo.h \
     schemeinfo.h \
-    addmode.h
+    addmode.h \
+    sqlitedbaoperator.h \
+    dbpage.h \
+#    frmdbpage.h
 
 
 SOURCES += \
@@ -46,9 +49,12 @@ SOURCES += \
     tipsdlg.cpp \
     patientinfo.cpp \
     schemeinfo.cpp \
-    addmode.cpp
+    addmode.cpp \
+    sqlitedbaoperator.cpp \
+    dbpage.cpp
+#    frmdbpage.cpp
 
 
 QT += widgets
 
-#TRANSLATIONS = cn.ts
+QT       += core gui sql

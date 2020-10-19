@@ -27,7 +27,7 @@ TipsDlg::~TipsDlg()
 
 void TipsDlg::startTimer()
 {
-    m_pTimer->start(800);
+    m_pTimer->start(1000);
 }
 
 void TipsDlg::initFrame(const QString &msg)
@@ -44,3 +44,4 @@ void TipsDlg::initFrame(const QString &msg)
     ui->tipsLabel->setText(msg);
 
 }
+

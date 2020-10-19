@@ -69,7 +69,7 @@ FilesWidget::FilesWidget(QWidget *parent) : QWidget(parent), ui(new Ui::FilesWid
     dbPage1->setColumnNames(columnNames);
     dbPage1->setColumnWidths(columnWidths);
     dbPage1->select();
-    qDebug() << "run into 绑定数据..";
+    
 }
 
 FilesWidget::~FilesWidget()

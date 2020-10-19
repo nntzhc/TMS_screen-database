@@ -13,6 +13,14 @@
 #include "singlemode.h"
 #include "seriesmode.h"
 #include "addmode.h"
+#include <qdebug.h>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include "sqlitedbaoperator.h"
+#include <QString>
+
+extern int now_user_id;
 
 namespace Ui {
 class MainWidget;
@@ -26,6 +34,7 @@ public:
 
     explicit MainWidget(QWidget *parent = nullptr);
     ~MainWidget();
+    QSqlQuery sql_query;
 
 
 private:
@@ -42,7 +51,6 @@ private:
     SeriesMode *seriesmode;
     ModifyMode *modifymode;
     Addmode *addmode;
-
 
     QStackedLayout *stackLayout;	//QStackedLayout布局
 

@@ -2,6 +2,7 @@
 #define LoginWIDGET_H
 
 #include <QWidget>
+#include <QString>
 
 namespace Ui {
 class LoginWidget;
