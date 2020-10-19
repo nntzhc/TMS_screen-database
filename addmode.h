@@ -8,6 +8,7 @@
 #include "schemeinfo.h"
 #include <QVector>
 #include <QFile>
+#include "sqlitedbaoperator.h"
 
 
 namespace Ui {

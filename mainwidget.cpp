@@ -3,7 +3,7 @@
 
 //全局变量
 QString now_user_name;
-QString now_user_id;
+int now_user_id;
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -42,6 +42,10 @@ MainWidget::MainWidget(QWidget *parent) :
 
     connect(menuwidget, &MenuWidget::display, stackLayout, &QStackedLayout::setCurrentIndex);
     connect(loginwidget, &LoginWidget::display, stackLayout, &QStackedLayout::setCurrentIndex);
+
+    connect(loginwidget, &LoginWidget::idchange, fileswidget, &FilesWidget::initForm);
+    connect(loginwidget, &LoginWidget::idchange, fileswidget, &FilesWidget::initTable);
+
     connect(fileswidget, &FilesWidget::display, stackLayout, &QStackedLayout::setCurrentIndex);
     connect(selectmodewidget, &SelectModeWidget::display, stackLayout, &QStackedLayout::setCurrentIndex);
     connect(sortwidget, &SortWidget::display, stackLayout, &QStackedLayout::setCurrentIndex);

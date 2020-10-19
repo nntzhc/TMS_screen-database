@@ -2,6 +2,7 @@
 #define LoginWIDGET_H
 
 #include <QWidget>
+#include <QString>
 
 namespace Ui {
 class LoginWidget;
@@ -20,6 +21,8 @@ private:
 
 signals:
     void display(int number);
+    void idchange(int id);//声明信号
+
 
 private slots:
     void on_returnButton_clicked();

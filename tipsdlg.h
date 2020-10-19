@@ -25,12 +25,14 @@ public:
 
     void startTimer();
 
+
 private:
     /**
      * @brief initFrame 初始化对话框
      * @param msg       提示信息
      */
     void initFrame(const QString &msg);
+    void sendmsg(QString &msg);
 
 private:
     Ui::TipsDlg *ui;
