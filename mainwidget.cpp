@@ -3,7 +3,7 @@
 
 //全局变量
 QString now_user_name;
-QString now_user_id;
+int now_user_id;
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -22,6 +22,7 @@ MainWidget::MainWidget(QWidget *parent) :
     seriesmode = new SeriesMode ;
     modifymode = new ModifyMode ;
     addmode = new Addmode;
+    allpatients= new AllPatients;
 
 
     stackLayout->addWidget(menuwidget);         //0
@@ -29,19 +30,27 @@ MainWidget::MainWidget(QWidget *parent) :
     stackLayout->addWidget(selectmodewidget);   //2
     stackLayout->addWidget(fileswidget);        //3
     stackLayout->addWidget(sortwidget);         //4
-    stackLayout->addWidget(signupwidget);       //5
 
+    stackLayout->addWidget(signupwidget);       //5
     stackLayout->addWidget(singlemode);         //6
     stackLayout->addWidget(seriesmode);         //7
     stackLayout->addWidget(modifymode);         //8
     stackLayout->addWidget(addmode);            //9
 
+    stackLayout->addWidget(allpatients);        //10
+
 
     setLayout(stackLayout);
 
-
     connect(menuwidget, &MenuWidget::display, stackLayout, &QStackedLayout::setCurrentIndex);
     connect(loginwidget, &LoginWidget::display, stackLayout, &QStackedLayout::setCurrentIndex);
+
+    connect(loginwidget, &LoginWidget::idchange, fileswidget, &FilesWidget::initForm);
+    connect(loginwidget, &LoginWidget::idchange, fileswidget, &FilesWidget::initTable);
+//    connect(loginwidget, &LoginWidget::idchange, loginwidget, &LoginWidget::lastloginbutton_alter);
+//    connect(loginwidget, &LoginWidget::idchange, allpatients, &FilesWidget::initForm);
+//    connect(loginwidget, &LoginWidget::idchange, allpatients, &FilesWidget::initTable);
+
     connect(fileswidget, &FilesWidget::display, stackLayout, &QStackedLayout::setCurrentIndex);
     connect(selectmodewidget, &SelectModeWidget::display, stackLayout, &QStackedLayout::setCurrentIndex);
     connect(sortwidget, &SortWidget::display, stackLayout, &QStackedLayout::setCurrentIndex);
@@ -51,6 +60,7 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(seriesmode, &SeriesMode::display, stackLayout, &QStackedLayout::setCurrentIndex);
     connect(modifymode, &ModifyMode::display, stackLayout, &QStackedLayout::setCurrentIndex);
     connect(addmode, &Addmode::display, stackLayout, &QStackedLayout::setCurrentIndex);
+    connect(allpatients, &AllPatients::display, stackLayout, &QStackedLayout::setCurrentIndex);
 }
 
 MainWidget::~MainWidget()

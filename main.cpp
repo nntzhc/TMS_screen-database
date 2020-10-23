@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QString>
 #include "mainwidget.h"
-//#include "qstring.h"
+#include "sqlitedbaoperator.h"
 
 int main(int argc, char *argv[]){
 //    //解决可能的中文乱码
@@ -11,10 +11,12 @@ int main(int argc, char *argv[]){
 
     QApplication app(argc, argv);
 
+//    int now_user_id=0;
 //    char now_user_name=' ';
 //    int now_user_id=0;
 
     MainWidget w;
+    w.setWindowTitle("TMS桌面控制程序");
     w.show();
 
     return app.exec();

@@ -10,7 +10,9 @@ FORMS += \
     modifymode.ui \
     fileswidget.ui \
     tipsdlg.ui \
-    addmode.ui
+    addmode.ui \
+    allpatients.ui \
+    modifymode_exec.ui
 
 
 HEADERS += \
@@ -24,11 +26,16 @@ HEADERS += \
     seriesmode.h \
     modifymode.h \
     fileswidget.h \
-    studentinfo.h \
+#    studentinfo.h \
     tipsdlg.h \
     patientinfo.h \
     schemeinfo.h \
-    addmode.h
+    addmode.h \
+    sqlitedbaoperator.h \
+    dbpage.h \
+#    frmdbpage.h
+    allpatients.h \
+    modifymode_exec.h
 
 
 SOURCES += \
@@ -46,9 +53,14 @@ SOURCES += \
     tipsdlg.cpp \
     patientinfo.cpp \
     schemeinfo.cpp \
-    addmode.cpp
+    addmode.cpp \
+    sqlitedbaoperator.cpp \
+    dbpage.cpp \
+    allpatients.cpp \
+    modifymode_exec.cpp
+#    frmdbpage.cpp
 
 
 QT += widgets
 
-#TRANSLATIONS = cn.ts
+QT       += core gui sql
