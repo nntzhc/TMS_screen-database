@@ -1,6 +1,5 @@
 FORMS += \
     menuwidget.ui \
-    sortwidget.ui \
     mainwidget.ui \
     loginwidget.ui \
     signupwidget.ui \
@@ -10,12 +9,15 @@ FORMS += \
     modifymode.ui \
     fileswidget.ui \
     tipsdlg.ui \
-    addmode.ui
+    addmode.ui \
+    allpatients.ui \
+    modifymode_exec.ui \
+    history.ui \
+    settings.ui
 
 
 HEADERS += \
     menuwidget.h \
-    sortwidget.h \
     mainwidget.h \
     loginwidget.h \
     signupwidget.h \
@@ -24,16 +26,22 @@ HEADERS += \
     seriesmode.h \
     modifymode.h \
     fileswidget.h \
-    studentinfo.h \
+#    studentinfo.h \
     tipsdlg.h \
     patientinfo.h \
     schemeinfo.h \
-    addmode.h
+    addmode.h \
+    sqlitedbaoperator.h \
+    dbpage.h \
+#    frmdbpage.h
+    allpatients.h \
+    modifymode_exec.h \
+    history.h \
+    settings.h
 
 
 SOURCES += \
     menuwidget.cpp \
-    sortwidget.cpp \
     mainwidget.cpp \
     main.cpp \
     loginwidget.cpp \
@@ -46,9 +54,16 @@ SOURCES += \
     tipsdlg.cpp \
     patientinfo.cpp \
     schemeinfo.cpp \
-    addmode.cpp
+    addmode.cpp \
+    sqlitedbaoperator.cpp \
+    dbpage.cpp \
+    allpatients.cpp \
+    modifymode_exec.cpp \
+    history.cpp \
+    settings.cpp
+#    frmdbpage.cpp
 
 
 QT += widgets
 
-#TRANSLATIONS = cn.ts
+QT       += core gui sql

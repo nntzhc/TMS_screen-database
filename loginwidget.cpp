@@ -5,13 +5,38 @@
 
 //全局变量
 extern QString now_user_name;
-extern QString now_user_id;
+extern int now_user_id;
+int now_user_id_temp=0;
+QString now_user_name_temp=QString(" ");
+
+void LoginWidget::lastloginbutton_alter()
+{
+    QString text = "快捷登录: 编号:"+QString::number(now_user_id_temp)+" 姓名:"+now_user_name_temp;
+    ui->lastloginButton->setText(text);
+    ui->lastloginButton->setVisible(true);
+}
 
 LoginWidget::LoginWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LoginWidget)
 {
     ui->setupUi(this);
+    ui->lastloginButton->setVisible(false);
+
+    QFile file("logs.txt");
+    file.open(QIODevice::ReadOnly|QIODevice::Text);
+        QTextStream inp(&file);
+    while(!inp.atEnd()){    //读到文件结尾
+        inp >> now_user_id_temp >> now_user_name_temp ;
+        }
+
+    if(now_user_id_temp!=0){
+        lastloginbutton_alter();
+    }
+    else{
+        now_user_name=" ";
+    }
+    file.close();
 }
 
 LoginWidget::~LoginWidget()
@@ -27,43 +52,62 @@ void LoginWidget::on_signupButton_clicked()
     emit display(5);
 }
 
-void LoginWidget::on_nameLineEdit_editingFinished()
-{
-
-
-}
-
-void LoginWidget::on_idLineEdit_editingFinished()
-{
-
-}
-
 void LoginWidget::on_loginButton_clicked()
 {
     now_user_name = ui->nameLineEdit->text();
-    now_user_id=ui->idLineEdit->text();
+    now_user_id= ui->idLineEdit->text().toInt();
 
-    if((now_user_id==0)/*and(now_user_name=="")*/){ //如果id未输入，进行提醒
+    SqliteDBAOperator sqlite;
+    sqlite.OpenDb();
+
+    if(ui->idLineEdit->text()==""){ //如果id未输入，进行提醒
         QMessageBox::about(NULL, "错误", "ID未输入");
         return;
     }
     else{
-            QFile file(now_user_id+".txt");
-            file.open(QIODevice::ReadOnly|QIODevice::Text);
-            //以只读方式打开文本文件student.txt
-            QTextStream inp(&file);
-            if(!file.isOpen()){ //文件打开失败
-                QMessageBox::about(NULL, "提示", "用户未注册");
-                return ;
-            }
-            else{
-                TipsDlg dlg(TipsType_Ok, now_user_id+" 登陆成功", this->topLevelWidget());
-                dlg.setAttribute(Qt::WA_ShowModal, true);
-                dlg.startTimer();
-                dlg.exec();
-                emit display(0);
+        QString p_id=QString("p")+QString::number(now_user_id);
+        if(!sqlite.IsTaBexists(p_id))
+        {
+            QMessageBox::about(NULL, "提示", "用户未注册");
+            now_user_name="";
+            now_user_id=0;
+            return ;
+        }
+        else
+        {
 
-                return ;
+            TipsDlg dlg(TipsType_Ok, QString::number(now_user_id)+" "+now_user_name+" 登陆成功", this->topLevelWidget());
+            dlg.setAttribute(Qt::WA_ShowModal, true);
+            dlg.startTimer();
+            dlg.exec();
+
+            emit display(0);
+            emit idchange(now_user_id);
+
             }
-    }
+        }
+}
+
+
+void LoginWidget::on_logoffButton_clicked()
+{
+    now_user_id=0;
+    ui->idLineEdit->clear();
+    ui->nameLineEdit->clear();
+    TipsDlg dlg(TipsType_Ok, "已注销", this->topLevelWidget());
+    dlg.setAttribute(Qt::WA_ShowModal, true);
+    dlg.startTimer();
+    dlg.exec();
+}
+
+void LoginWidget::on_lastloginButton_clicked()
+{
+    now_user_id=now_user_id_temp;
+    TipsDlg dlg(TipsType_Ok, QString::number(now_user_id)+" "+now_user_name+" 登陆成功", this->topLevelWidget());
+    dlg.setAttribute(Qt::WA_ShowModal, true);
+    dlg.startTimer();
+    dlg.exec();
+
+    emit display(0);
+    emit idchange(now_user_id);
 }

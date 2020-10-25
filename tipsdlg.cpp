@@ -1,5 +1,8 @@
 #include "tipsdlg.h"
 #include "ui_tipsdlg.h"
+#include "settings.h"
+
+//int Noticetime_Default;
 
 TipsDlg::TipsDlg(TipsType type, const QString &msg, QWidget *parent) :
     QDialog(parent),
@@ -27,7 +30,7 @@ TipsDlg::~TipsDlg()
 
 void TipsDlg::startTimer()
 {
-    m_pTimer->start(800);
+    m_pTimer->start(Noticetime_Default*1000);
 }
 
 void TipsDlg::initFrame(const QString &msg)
@@ -44,3 +47,4 @@ void TipsDlg::initFrame(const QString &msg)
     ui->tipsLabel->setText(msg);
 
 }
+

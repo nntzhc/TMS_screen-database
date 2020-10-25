@@ -5,12 +5,14 @@
 class PatientInfo
 {
 private:
-    QString id,name,gender;
-    int  age, times;
+
 
 public:
+    QString name,gender;
+    int  id,age, times;
+
     PatientInfo();
-    PatientInfo(QString tname,QString tid, QString tgender , int tage, int ttimes ){
+    PatientInfo(QString tname,int tid, QString tgender , int tage, int ttimes ){
         name = tname;
         gender= tgender;
         id = tid;
@@ -19,7 +21,7 @@ public:
 
     }
 
-    QString getId(){
+    int getId(){
             return id;
         }
     QString getName(){
@@ -36,7 +38,7 @@ public:
         return times;
     }
 
-    void setId(QString tid){
+    void setId(int tid){
         id = tid;
     }
     void setName(QString tname){
